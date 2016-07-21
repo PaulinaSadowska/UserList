@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nekodev.paulina.sadowska.userlist.daos.User;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,8 +28,8 @@ public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         ButterKnife.bind(this, itemView);
     }
 
-    public void fillWIthData(UserData user){
-       // userAvatar.setImageResource(user.getAvatar());
+    public void fillWIthData(User user){
+       // userAvatar.setImageResource(user.getAvatar()); //TODO - uncomment
         userName.setText(user.getName());
     }
 

@@ -5,7 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.nekodev.paulina.sadowska.userlist.daos.User;
+
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
 
-    List<UserData> users;
+    List<User> users;
 
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,40 +33,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
     }
 
     public void loadData() {
-        users = new ArrayList<>();
-        users.add(new UserData() {
-            @Override
-            public String getName() {
-                return "name";
-            }
-
-            @Override
-            public int getAvatar() {
-                return 0;
-            }
-        });
-        users.add(new UserData() {
-            @Override
-            public String getName() {
-                return "name";
-            }
-
-            @Override
-            public int getAvatar() {
-                return 0;
-            }
-        });
-        users.add(new UserData() {
-            @Override
-            public String getName() {
-                return "name";
-            }
-
-            @Override
-            public int getAvatar() {
-                return 0;
-            }
-        });
-        notifyDataSetChanged();
+        new GithubDataProvider().getItems();
     }
 }
