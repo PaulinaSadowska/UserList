@@ -6,9 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nekodev.paulina.sadowska.userlist.daos.User;
-import com.nekodev.paulina.sadowska.userlist.dataaccess.providers.DailyMotionDataProvider;
-import com.nekodev.paulina.sadowska.userlist.dataaccess.providers.GithubDataProvider;
+import com.nekodev.paulina.sadowska.userlist.dataaccess.providers.MainDataProvider;
+import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
 
-    List<User> users;
+    List<User> userList = new ArrayList<>();
 
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -26,16 +27,25 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-        holder.fillWIthData(users.get(position));
+        holder.fillWIthData(userList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return users != null ? users.size() : 0;
+        return userList != null ? userList.size() : 0;
     }
 
     public void loadData() {
-        new GithubDataProvider().loadData();
-        new DailyMotionDataProvider().loadData();
+        MainDataProvider mainDataProvider = new MainDataProvider();
+        mainDataProvider.setDataReadyListener(new DataReadyListener() {
+            @Override
+            public void DataReady(List<User> users) {
+                if(users!=null) {
+                    userList.addAll(users);
+                    notifyDataSetChanged();
+                }
+            }
+        });
+        mainDataProvider.loadData();
     }
 }

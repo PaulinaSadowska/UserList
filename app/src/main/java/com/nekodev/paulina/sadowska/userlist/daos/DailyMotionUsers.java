@@ -7,4 +7,8 @@ import java.util.List;
  */
 public class DailyMotionUsers {
     List<DailyMotionUserData> list;
+
+    public List<DailyMotionUserData> getUsersList() {
+        return list;
+    }
 }

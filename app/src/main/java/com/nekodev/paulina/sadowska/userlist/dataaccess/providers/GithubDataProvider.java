@@ -4,13 +4,14 @@ package com.nekodev.paulina.sadowska.userlist.dataaccess.providers;
  * Created by Paulina Sadowska on 21.07.2016.
  */
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nekodev.paulina.sadowska.userlist.daos.GithubUserData;
+import com.nekodev.paulina.sadowska.userlist.daos.User;
 import com.nekodev.paulina.sadowska.userlist.dataaccess.API.GithubAPI;
+import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,6 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GithubDataProvider implements Callback<List<GithubUserData>>, DataProvider {
 
     private static final String ADDRESS = "https://api.github.com/";
+    private DataReadyListener listener;
 
     @Override
     public void loadData() {
@@ -40,9 +42,19 @@ public class GithubDataProvider implements Callback<List<GithubUserData>>, DataP
     }
 
     @Override
-    public void onResponse(Call<List<GithubUserData>> call, Response<List<GithubUserData>> response) {
-        Log.d(GithubDataProvider.class.getName(), response.body().toString());
+    public void setDataReadyListener(DataReadyListener listener) {
+        this.listener = listener;
+    }
 
+    @Override
+    public void onResponse(Call<List<GithubUserData>> call, Response<List<GithubUserData>> response) {
+        if(listener!=null){
+            List<User> userList = new ArrayList<>();
+            for(User u: response.body()) {
+                userList.add(u);
+            }
+            listener.DataReady(userList);
+        }
     }
 
     @Override

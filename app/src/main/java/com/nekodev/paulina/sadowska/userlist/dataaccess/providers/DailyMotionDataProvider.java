@@ -1,11 +1,14 @@
 package com.nekodev.paulina.sadowska.userlist.dataaccess.providers;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nekodev.paulina.sadowska.userlist.daos.DailyMotionUsers;
+import com.nekodev.paulina.sadowska.userlist.daos.User;
 import com.nekodev.paulina.sadowska.userlist.dataaccess.API.DailyMotionAPI;
+import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DailyMotionDataProvider implements Callback<DailyMotionUsers>, DataProvider {
 
     private static final String ADDRESS = "https://api.dailymotion.com/";
+    private DataReadyListener listener;
 
     @Override
     public void loadData() {
@@ -35,8 +39,19 @@ public class DailyMotionDataProvider implements Callback<DailyMotionUsers>, Data
     }
 
     @Override
+    public void setDataReadyListener(DataReadyListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
     public void onResponse(Call<DailyMotionUsers> call, Response<DailyMotionUsers> response) {
-        Log.d(DailyMotionDataProvider.class.getName(), response.body().toString());
+        if(listener!=null){
+            List<User> userList = new ArrayList<>();
+            for(User u: response.body().getUsersList()) {
+                userList.add(u);
+            }
+            listener.DataReady(userList);
+        }
     }
 
     @Override
