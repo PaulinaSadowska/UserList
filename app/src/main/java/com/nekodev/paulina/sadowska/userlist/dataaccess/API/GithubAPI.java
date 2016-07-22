@@ -1,4 +1,4 @@
-package com.nekodev.paulina.sadowska.userlist.dataaccess;
+package com.nekodev.paulina.sadowska.userlist.dataaccess.API;
 
 import com.nekodev.paulina.sadowska.userlist.daos.GithubUserData;
 

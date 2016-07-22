@@ -14,7 +14,7 @@ public class GithubUserData implements User {
     }
 
     @Override
-    public int getAvatar() {
-        return 0; // TODO - implement me
+    public String getAvatarUrl() {
+        return avatar_url;
     }
 }

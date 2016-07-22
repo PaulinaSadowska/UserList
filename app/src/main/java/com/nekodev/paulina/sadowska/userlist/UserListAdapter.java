@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nekodev.paulina.sadowska.userlist.daos.User;
+import com.nekodev.paulina.sadowska.userlist.dataaccess.providers.DailyMotionDataProvider;
+import com.nekodev.paulina.sadowska.userlist.dataaccess.providers.GithubDataProvider;
 
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
     }
 
     public void loadData() {
-        new GithubDataProvider().getItems();
+        new GithubDataProvider().loadData();
+        new DailyMotionDataProvider().loadData();
     }
 }

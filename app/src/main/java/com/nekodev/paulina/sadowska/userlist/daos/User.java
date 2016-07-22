@@ -6,5 +6,5 @@ package com.nekodev.paulina.sadowska.userlist.daos;
 public interface User {
 
     String getName();
-    int getAvatar();
+    String getAvatarUrl();
 }
