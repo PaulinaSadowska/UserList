@@ -1,5 +1,6 @@
 package com.nekodev.paulina.sadowska.userlist;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import com.nekodev.paulina.sadowska.userlist.daos.User;
 import com.nekodev.paulina.sadowska.userlist.dataaccess.providers.MainDataProvider;
 import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,12 @@ import java.util.List;
  */
 public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
 
-    List<User> userList = new ArrayList<>();
+    private List<User> userList = new ArrayList<>();
+    private Context context;
+
+    public UserListAdapter(Context context){
+        this.context = context;
+    }
 
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -27,7 +34,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-        holder.fillWIthData(userList.get(position));
+        User user = userList.get(position);
+        Picasso.with(context).load(user.getAvatarUrl()).into(holder.userAvatar);
+        holder.userName.setText(user.getName());
     }
 
     @Override

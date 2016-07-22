@@ -1,7 +1,6 @@
 package com.nekodev.paulina.sadowska.userlist;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,14 +29,14 @@ public class UserListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         configureRecyclerView();
     }
 
     private void configureRecyclerView() {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        mListAdapter = new UserListAdapter();
+        mListAdapter = new UserListAdapter(getActivity().getApplicationContext());
         mRecyclerView.setAdapter(mListAdapter);
         mListAdapter.loadData();
     }
