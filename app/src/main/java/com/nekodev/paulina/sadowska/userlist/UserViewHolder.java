@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nekodev.paulina.sadowska.userlist.listeners.ItemClickedListener;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,7 +23,7 @@ public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     @BindView(R.id.user_item_layout)
     RelativeLayout userLayout;
 
-    //private ItemClickedListener itemClickedListener;
+    private ItemClickedListener itemClickedListener;
 
     public UserViewHolder(View itemView) {
         super(itemView);
@@ -31,6 +33,12 @@ public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        //TODO - implement;
+        if(itemClickedListener!=null){
+            itemClickedListener.itemClicked(getAdapterPosition());
+        }
+    }
+
+    public void setItemClickedListener(ItemClickedListener itemClickedListener) {
+        this.itemClickedListener = itemClickedListener;
     }
 }

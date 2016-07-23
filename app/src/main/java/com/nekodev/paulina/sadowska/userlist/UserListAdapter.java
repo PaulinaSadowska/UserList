@@ -11,6 +11,8 @@ import com.nekodev.paulina.sadowska.userlist.daos.UserData;
 import com.nekodev.paulina.sadowska.userlist.daos.UserSource;
 import com.nekodev.paulina.sadowska.userlist.dataaccess.providers.MainDataProvider;
 import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
+import com.nekodev.paulina.sadowska.userlist.listeners.ItemClickedListener;
+import com.nekodev.paulina.sadowska.userlist.listeners.UserClickedListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
 
     private List<UserData> userList = new ArrayList<>();
     private Context context;
+    private UserClickedListener userClickedListener;
 
     public UserListAdapter(Context context){
         this.context = context;
@@ -45,6 +48,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
         Picasso.with(context).load(user.getAvaratUrl()).into(holder.userAvatar);
         holder.userName.setText(user.getUsername());
         holder.userLayout.setBackgroundColor(getBackgroundColor(user.getUserSource()));
+        holder.setItemClickedListener(new ItemClickedListener() {
+            @Override
+            public void itemClicked(int position) {
+                if (userClickedListener != null) {
+                    userClickedListener.userClicked(userList.get(position));
+                }
+            }
+        });
     }
 
     private int getBackgroundColor(UserSource userSource) {
@@ -70,5 +81,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
             }
         });
         mainDataProvider.loadData();
+    }
+
+    public void setUserClickedListener(UserClickedListener userClickedListener) {
+        this.userClickedListener = userClickedListener;
     }
 }

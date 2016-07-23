@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nekodev.paulina.sadowska.userlist.daos.UserData;
+import com.nekodev.paulina.sadowska.userlist.listeners.UserClickedListener;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -20,6 +23,7 @@ public class UserListFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     private UserListAdapter mListAdapter;
+    private UserClickedListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +42,18 @@ public class UserListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mListAdapter = new UserListAdapter(getActivity().getApplicationContext());
         mRecyclerView.setAdapter(mListAdapter);
+        mListAdapter.setUserClickedListener(new UserClickedListener() {
+            @Override
+            public void userClicked(UserData user) {
+                if(listener!=null){
+                    listener.userClicked(user);
+                }
+            }
+        });
         mListAdapter.loadData();
+    }
+
+    public void setUserClickedListener(UserClickedListener listener) {
+        this.listener = listener;
     }
 }
