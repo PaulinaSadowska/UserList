@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/user_item_layout"
+<RelativeLayout android:id="@+id/user_item_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_marginRight="@dimen/list_item_margin"
+    android:layout_marginEnd="@dimen/list_item_margin"
+    android:layout_marginBottom="@dimen/list_item_margin"
     android:layout_height="@dimen/list_item_height"
+    android:elevation="4dp"
+    android:gravity="center"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerVertical="true"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="@dimen/image_size"
+        android:layout_centerHorizontal="true"
         tools:src="@android:drawable/ic_media_next"/>
 
     <TextView
         android:id="@+id/user_name"
+        android:fontFamily="sans-serfif-light"
+        android:textSize="16sp"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
         android:layout_centerVertical="true"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/user_avatar"
-        android:layout_toEndOf="@id/user_avatar"
+        android:layout_below="@id/user_avatar"
+        android:layout_centerHorizontal="true"
         tools:text="name"/>
 
 </RelativeLayout>

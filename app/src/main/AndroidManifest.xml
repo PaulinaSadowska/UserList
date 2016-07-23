@@ -19,7 +19,7 @@
         </activity>
         <activity
             android:name=".activities.UserPreviewActivity"
-            android:theme="@style/Base.Theme.AppCompat.Dialog"/>
+            android:theme="@style/PreviewDialogTheme"/>
     </application>
 
 </manifest>
