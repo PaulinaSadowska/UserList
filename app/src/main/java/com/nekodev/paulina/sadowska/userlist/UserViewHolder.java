@@ -3,6 +3,7 @@ package com.nekodev.paulina.sadowska.userlist;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -17,6 +18,8 @@ public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     ImageView userAvatar;
     @BindView(R.id.user_name)
     TextView userName;
+    @BindView(R.id.user_item_layout)
+    RelativeLayout userLayout;
 
     //private ItemClickedListener itemClickedListener;
 
