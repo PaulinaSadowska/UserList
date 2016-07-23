@@ -7,11 +7,10 @@ package com.nekodev.paulina.sadowska.userlist.dataaccess.providers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nekodev.paulina.sadowska.userlist.daos.GithubUserData;
-import com.nekodev.paulina.sadowska.userlist.daos.User;
+import com.nekodev.paulina.sadowska.userlist.daos.UserDataMapper;
 import com.nekodev.paulina.sadowska.userlist.dataaccess.API.GithubAPI;
 import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -49,11 +48,7 @@ public class GithubDataProvider implements Callback<List<GithubUserData>>, DataP
     @Override
     public void onResponse(Call<List<GithubUserData>> call, Response<List<GithubUserData>> response) {
         if(listener!=null){
-            List<User> userList = new ArrayList<>();
-            for(User u: response.body()) {
-                userList.add(u);
-            }
-            listener.DataReady(userList);
+                listener.DataReady(new UserDataMapper().mapGithubUsers(response.body()));
         }
     }
 

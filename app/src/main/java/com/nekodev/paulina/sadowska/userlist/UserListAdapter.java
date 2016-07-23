@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nekodev.paulina.sadowska.userlist.daos.User;
+import com.nekodev.paulina.sadowska.userlist.daos.UserData;
 import com.nekodev.paulina.sadowska.userlist.dataaccess.providers.MainDataProvider;
 import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
 import com.squareup.picasso.Picasso;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
 
-    private List<User> userList = new ArrayList<>();
+    private List<UserData> userList = new ArrayList<>();
     private Context context;
 
     public UserListAdapter(Context context){
@@ -34,9 +34,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-        User user = userList.get(position);
-        Picasso.with(context).load(user.getAvatarUrl()).into(holder.userAvatar);
-        holder.userName.setText(user.getName());
+        UserData user = userList.get(position);
+        Picasso.with(context).load(user.getAvaratUrl()).into(holder.userAvatar);
+        holder.userName.setText(user.getUsername());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
         MainDataProvider mainDataProvider = new MainDataProvider();
         mainDataProvider.setDataReadyListener(new DataReadyListener() {
             @Override
-            public void DataReady(List<User> users) {
+            public void DataReady(List<UserData> users) {
                 if(users!=null) {
                     userList.addAll(users);
                     notifyDataSetChanged();

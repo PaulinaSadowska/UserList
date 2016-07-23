@@ -1,6 +1,6 @@
 package com.nekodev.paulina.sadowska.userlist.dataaccess.providers;
 
-import com.nekodev.paulina.sadowska.userlist.daos.User;
+import com.nekodev.paulina.sadowska.userlist.daos.UserData;
 import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class MainDataProvider implements DataProvider {
         for (DataProvider dataProvider : dataProviders) {
             dataProvider.setDataReadyListener(new DataReadyListener() {
                 @Override
-                public void DataReady(List<User> users) {
+                public void DataReady(List<UserData> users) {
                     if(listener!=null) {
                         listener.DataReady(users);
                     }

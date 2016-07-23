@@ -3,12 +3,9 @@ package com.nekodev.paulina.sadowska.userlist.dataaccess.providers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nekodev.paulina.sadowska.userlist.daos.DailyMotionUsers;
-import com.nekodev.paulina.sadowska.userlist.daos.User;
+import com.nekodev.paulina.sadowska.userlist.daos.UserDataMapper;
 import com.nekodev.paulina.sadowska.userlist.dataaccess.API.DailyMotionAPI;
 import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,11 +43,7 @@ public class DailyMotionDataProvider implements Callback<DailyMotionUsers>, Data
     @Override
     public void onResponse(Call<DailyMotionUsers> call, Response<DailyMotionUsers> response) {
         if(listener!=null){
-            List<User> userList = new ArrayList<>();
-            for(User u: response.body().getUsersList()) {
-                userList.add(u);
-            }
-            listener.DataReady(userList);
+            listener.DataReady(new UserDataMapper().mapDailyMotionUsers(response.body().getUsersList()));
         }
     }
 
