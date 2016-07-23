@@ -45,7 +45,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
         UserData user = userList.get(position);
-        Picasso.with(context).load(user.getAvaratUrl()).noFade().into(holder.userAvatar);
+        Picasso.with(context).load(user.getAvatarUrl()).noFade().into(holder.userAvatar);
         holder.userName.setText(user.getUsername());
         holder.userLayout.setBackgroundColor(getBackgroundColor(user.getUserSource()));
         holder.setItemClickedListener(new ItemClickedListener() {

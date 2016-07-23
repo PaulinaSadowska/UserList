@@ -28,7 +28,7 @@ public class UserListActivity extends AppCompatActivity {
             public void userClicked(UserData user) {
                 Intent previewActivity = new Intent(getApplicationContext(), UserPreviewActivity.class);
                 previewActivity.putExtra(Constants.IntentExtras.USERNAME_KEY, user.getUsername());
-                previewActivity.putExtra(Constants.IntentExtras.AVATAR_URL_KEY, user.getAvaratUrl());
+                previewActivity.putExtra(Constants.IntentExtras.AVATAR_URL_KEY, user.getAvatarUrl());
                 previewActivity.putExtra(Constants.IntentExtras.USER_SOURCE_KEY, user.getUserSource());
                 startActivity(previewActivity);
             }

@@ -8,7 +8,7 @@ public class GithubUserData {
     private String login;
     private String avatar_url;
 
-    public String getName() {
+    public String getUsername() {
         return login;
     }
     public String getAvatarUrl() {

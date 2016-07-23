@@ -25,10 +25,10 @@ public class UserDataMapper {
     }
 
     private UserData toUserData(GithubUserData githibUser){
-        return new UserData(githibUser.getName(), githibUser.getAvatarUrl(), UserSource.GITHUB);
+        return new UserData(githibUser.getUsername(), githibUser.getAvatarUrl(), UserSource.GITHUB);
     }
 
     private UserData toUserData(DailyMotionUserData dailyMotionUser){
-        return new UserData(dailyMotionUser.getName(), dailyMotionUser.getAvatarUrl(), UserSource.DAILY_MOTION);
+        return new UserData(dailyMotionUser.getUsername(), dailyMotionUser.getAvatarUrl(), UserSource.DAILY_MOTION);
     }
 }

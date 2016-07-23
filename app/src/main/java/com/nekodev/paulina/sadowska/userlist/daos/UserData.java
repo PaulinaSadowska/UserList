@@ -19,7 +19,7 @@ public class UserData {
         return userSource;
     }
 
-    public String getAvaratUrl() {
+    public String getAvatarUrl() {
         return avaratUrl;
     }
 

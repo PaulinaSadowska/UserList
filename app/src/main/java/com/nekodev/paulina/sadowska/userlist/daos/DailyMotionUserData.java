@@ -9,7 +9,7 @@ public class DailyMotionUserData{
     private String avatar_360_url;
 
 
-    public String getName() {
+    public String getUsername() {
         return username;
     }
     public String getAvatarUrl() {
