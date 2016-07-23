@@ -6,9 +6,13 @@ package com.nekodev.paulina.sadowska.userlist.dataaccess.providers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.nekodev.paulina.sadowska.userlist.Constants;
 import com.nekodev.paulina.sadowska.userlist.daos.GithubUserData;
+import com.nekodev.paulina.sadowska.userlist.daos.UserData;
 import com.nekodev.paulina.sadowska.userlist.daos.UserDataMapper;
 import com.nekodev.paulina.sadowska.userlist.dataaccess.API.GithubAPI;
+import com.nekodev.paulina.sadowska.userlist.dataaccess.FileManager;
 import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
 
 import java.util.List;
@@ -26,9 +30,24 @@ public class GithubDataProvider implements Callback<List<GithubUserData>>, DataP
 
     private static final String ADDRESS = "https://api.github.com/";
     private DataReadyListener listener;
+    private Gson gson;
+    private FileManager fileManager;
+
+    public GithubDataProvider(String appFilesPath){
+        gson = new GsonBuilder().create();
+        fileManager = new FileManager(appFilesPath, Constants.FileNames.GITHUB);
+    }
 
     @Override
-    public void loadData() {
+    public void loadData(boolean forceReload) {
+        if(forceReload)
+            fileManager.saveToFile("");
+        else if(!fileManager.isFileEmpty()){
+            if(listener!=null){
+                listener.DataReady((List<UserData>) gson.fromJson(fileManager.readFromFile(), new TypeToken<List<UserData>>(){}.getType()));
+            }
+            return;
+        }
         Gson gson = new GsonBuilder()
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -47,9 +66,11 @@ public class GithubDataProvider implements Callback<List<GithubUserData>>, DataP
 
     @Override
     public void onResponse(Call<List<GithubUserData>> call, Response<List<GithubUserData>> response) {
+        List<UserData> users = new UserDataMapper().mapGithubUsers(response.body());
         if(listener!=null){
-                listener.DataReady(new UserDataMapper().mapGithubUsers(response.body()));
+                listener.DataReady(users);
         }
+        fileManager.saveToFile(gson.toJson(users));
     }
 
     @Override

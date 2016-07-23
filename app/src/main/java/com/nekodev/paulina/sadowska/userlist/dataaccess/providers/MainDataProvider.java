@@ -13,10 +13,10 @@ public class MainDataProvider implements DataProvider {
     private DataProvider[] dataProviders;
     private DataReadyListener listener;
 
-    public MainDataProvider(){
+    public MainDataProvider(String appFilesPath){
         dataProviders = new DataProvider[2];
-        dataProviders[0] = new GithubDataProvider();
-        dataProviders[1] = new DailyMotionDataProvider();
+        dataProviders[0] = new DailyMotionDataProvider(appFilesPath);
+        dataProviders[1] = new GithubDataProvider(appFilesPath);
         for (DataProvider dataProvider : dataProviders) {
             dataProvider.setDataReadyListener(new DataReadyListener() {
                 @Override
@@ -30,9 +30,9 @@ public class MainDataProvider implements DataProvider {
     }
 
     @Override
-    public void loadData() {
+    public void loadData(boolean forceReload) {
         for (DataProvider dataProvider : dataProviders) {
-            dataProvider.loadData();
+            dataProvider.loadData(forceReload);
         }
     }
 

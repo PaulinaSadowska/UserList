@@ -22,8 +22,8 @@ public class UserListFragment extends Fragment {
     @BindView(R.id.list_recycler_view)
     RecyclerView mRecyclerView;
 
-    private UserListAdapter mListAdapter;
     private UserClickedListener listener;
+    private boolean forceReload = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,12 +35,17 @@ public class UserListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(getArguments()!=null)
+        {
+            forceReload = getArguments().getByte(Constants.FORCE_RELOAD) == 1;
+        }
         configureRecyclerView();
     }
 
+
     private void configureRecyclerView() {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        mListAdapter = new UserListAdapter(getActivity().getApplicationContext());
+        UserListAdapter mListAdapter = new UserListAdapter(getActivity().getApplicationContext());
         mRecyclerView.setAdapter(mListAdapter);
         mListAdapter.setUserClickedListener(new UserClickedListener() {
             @Override
@@ -50,7 +55,7 @@ public class UserListFragment extends Fragment {
                 }
             }
         });
-        mListAdapter.loadData();
+        mListAdapter.loadData(forceReload);
     }
 
     public void setUserClickedListener(UserClickedListener listener) {

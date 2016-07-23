@@ -69,8 +69,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
         return userList != null ? userList.size() : 0;
     }
 
-    public void loadData() {
-        MainDataProvider mainDataProvider = new MainDataProvider();
+    public void loadData(boolean forceReload) {
+        MainDataProvider mainDataProvider = new MainDataProvider(context.getFilesDir().getPath());
         mainDataProvider.setDataReadyListener(new DataReadyListener() {
             @Override
             public void DataReady(List<UserData> users) {
@@ -80,7 +80,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder>  {
                 }
             }
         });
-        mainDataProvider.loadData();
+        mainDataProvider.loadData(forceReload);
     }
 
     public void setUserClickedListener(UserClickedListener userClickedListener) {

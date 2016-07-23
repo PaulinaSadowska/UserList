@@ -2,10 +2,16 @@ package com.nekodev.paulina.sadowska.userlist.dataaccess.providers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.nekodev.paulina.sadowska.userlist.Constants;
 import com.nekodev.paulina.sadowska.userlist.daos.DailyMotionUsers;
+import com.nekodev.paulina.sadowska.userlist.daos.UserData;
 import com.nekodev.paulina.sadowska.userlist.daos.UserDataMapper;
 import com.nekodev.paulina.sadowska.userlist.dataaccess.API.DailyMotionAPI;
+import com.nekodev.paulina.sadowska.userlist.dataaccess.FileManager;
 import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,19 +26,31 @@ public class DailyMotionDataProvider implements Callback<DailyMotionUsers>, Data
 
     private static final String ADDRESS = "https://api.dailymotion.com/";
     private DataReadyListener listener;
+    private Gson gson;
+    private FileManager fileManager;
+
+    public DailyMotionDataProvider(String appFilesPath){
+        gson = new GsonBuilder().create();
+        fileManager = new FileManager(appFilesPath, Constants.FileNames.DAILY_MOTION);
+    }
 
     @Override
-    public void loadData() {
+    public void loadData(boolean forceReload) {
+        if(forceReload)
+            fileManager.saveToFile("");
+        else if(!fileManager.isFileEmpty()){
+            if(listener!=null){
+                listener.DataReady((List<UserData>) gson.fromJson(fileManager.readFromFile(), new TypeToken<List<UserData>>(){}.getType()));
+            }
+            return;
+        }
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ADDRESS)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
 
-            Gson gson = new GsonBuilder()
-                    .create();
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(ADDRESS)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-
-            Call<DailyMotionUsers> call = retrofit.create(DailyMotionAPI.class).loadData();
-            call.enqueue(this);
+        Call<DailyMotionUsers> call = retrofit.create(DailyMotionAPI.class).loadData();
+        call.enqueue(this);
     }
 
     @Override
@@ -42,9 +60,11 @@ public class DailyMotionDataProvider implements Callback<DailyMotionUsers>, Data
 
     @Override
     public void onResponse(Call<DailyMotionUsers> call, Response<DailyMotionUsers> response) {
+        List<UserData> users = new UserDataMapper().mapDailyMotionUsers(response.body().getUsersList());
         if(listener!=null){
-            listener.DataReady(new UserDataMapper().mapDailyMotionUsers(response.body().getUsersList()));
+            listener.DataReady(users);
         }
+        fileManager.saveToFile(gson.toJson(users));
     }
 
     @Override

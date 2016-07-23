@@ -6,6 +6,6 @@ import com.nekodev.paulina.sadowska.userlist.listeners.DataReadyListener;
  * Created by Paulina Sadowska on 22.07.2016.
  */
 public interface DataProvider  {
-    void loadData();
+    void loadData(boolean forceReload);
     void setDataReadyListener(DataReadyListener listener);
 }
