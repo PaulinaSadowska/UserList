@@ -39,7 +39,7 @@ public class UserListActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
         outState.putByte(Constants.FORCE_RELOAD, (byte)0);
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 }
