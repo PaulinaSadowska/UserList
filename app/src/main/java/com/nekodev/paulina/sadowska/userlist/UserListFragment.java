@@ -1,5 +1,6 @@
 package com.nekodev.paulina.sadowska.userlist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nekodev.paulina.sadowska.userlist.activities.UserPreviewActivity;
 import com.nekodev.paulina.sadowska.userlist.daos.UserData;
 import com.nekodev.paulina.sadowska.userlist.listeners.UserClickedListener;
 
@@ -22,7 +24,6 @@ public class UserListFragment extends Fragment {
     @BindView(R.id.list_recycler_view)
     RecyclerView mRecyclerView;
 
-    private UserClickedListener listener;
     private boolean forceReload = true;
 
     @Override
@@ -50,17 +51,16 @@ public class UserListFragment extends Fragment {
         mListAdapter.setUserClickedListener(new UserClickedListener() {
             @Override
             public void userClicked(UserData user) {
-                if(listener!=null){
-                    listener.userClicked(user);
-                }
+                        Intent previewActivity = new Intent(getActivity(), UserPreviewActivity.class);
+                        previewActivity.putExtra(Constants.IntentExtras.USERNAME_KEY, user.getUsername());
+                        previewActivity.putExtra(Constants.IntentExtras.AVATAR_URL_KEY, user.getAvatarUrl());
+                        previewActivity.putExtra(Constants.IntentExtras.USER_SOURCE_KEY, user.getUserSource());
+                        startActivity(previewActivity);
             }
         });
         mListAdapter.loadData(forceReload);
     }
 
-    public void setUserClickedListener(UserClickedListener listener) {
-        this.listener = listener;
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
