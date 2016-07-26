@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.nekodev.paulina.sadowska.userlist.R;
-import com.nekodev.paulina.sadowska.userlist.UserListFragment;
+import com.nekodev.paulina.sadowska.userlist.fragments.UserListFragment;
 
 public class UserListActivity extends AppCompatActivity {
 
@@ -16,9 +16,8 @@ public class UserListActivity extends AppCompatActivity {
         if ((findViewById(R.id.activity_user_list_fragment_container) != null && savedInstanceState == null)
                 || findViewById(R.id.activity_user_list_fragment_container) == null) {
 
-                UserListFragment usersFragment = new UserListFragment();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.activity_user_list_fragment_container, usersFragment)
+                        .replace(R.id.activity_user_list_fragment_container, new UserListFragment())
                         .commit();
         }
     }

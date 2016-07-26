@@ -1,4 +1,4 @@
-package com.nekodev.paulina.sadowska.userlist;
+package com.nekodev.paulina.sadowska.userlist.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nekodev.paulina.sadowska.userlist.Constants;
+import com.nekodev.paulina.sadowska.userlist.R;
+import com.nekodev.paulina.sadowska.userlist.UserListAdapter;
 import com.nekodev.paulina.sadowska.userlist.activities.UserPreviewActivity;
 import com.nekodev.paulina.sadowska.userlist.daos.UserData;
 import com.nekodev.paulina.sadowska.userlist.listeners.UserClickedListener;
