@@ -35,9 +35,9 @@ public class UserListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(getArguments()!=null)
+        if(savedInstanceState!=null)
         {
-            forceReload = getArguments().getBoolean(Constants.FORCE_RELOAD);
+            forceReload = savedInstanceState.getBoolean(Constants.FORCE_RELOAD);
         }
         configureRecyclerView();
     }
@@ -60,5 +60,11 @@ public class UserListFragment extends Fragment {
 
     public void setUserClickedListener(UserClickedListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(Constants.FORCE_RELOAD, false);
+        super.onSaveInstanceState(outState);
     }
 }
