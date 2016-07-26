@@ -37,7 +37,7 @@ public class UserListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if(getArguments()!=null)
         {
-            forceReload = getArguments().getByte(Constants.FORCE_RELOAD) == 1;
+            forceReload = getArguments().getBoolean(Constants.FORCE_RELOAD);
         }
         configureRecyclerView();
     }

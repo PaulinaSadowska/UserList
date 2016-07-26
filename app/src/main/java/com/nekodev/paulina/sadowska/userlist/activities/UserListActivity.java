@@ -2,7 +2,6 @@ package com.nekodev.paulina.sadowska.userlist.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
@@ -20,9 +19,7 @@ public class UserListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_list);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         UserListFragment usersFragment = new UserListFragment();
-        if(savedInstanceState!=null) {
-            usersFragment.setArguments(savedInstanceState);
-        }
+        usersFragment.setArguments(savedInstanceState);
         usersFragment.setUserClickedListener(new UserClickedListener() {
             @Override
             public void userClicked(UserData user) {
@@ -38,8 +35,8 @@ public class UserListActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        outState.putByte(Constants.FORCE_RELOAD, (byte)0);
-        super.onSaveInstanceState(outState, outPersistentState);
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(Constants.FORCE_RELOAD, false);
+        super.onSaveInstanceState(outState);
     }
 }
